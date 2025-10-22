@@ -25,3 +25,4 @@ E:\Users\mauromi\source\git_repos\msal\1-no-auth\MyWebApp01\obj\Debug\net9.0\ref
 E:\Users\mauromi\source\git_repos\msal\1-no-auth\MyWebApp01\obj\Debug\net9.0\MyWebApp01.pdb
 E:\Users\mauromi\source\git_repos\msal\1-no-auth\MyWebApp01\obj\Debug\net9.0\MyWebApp01.genruntimeconfig.cache
 E:\Users\mauromi\source\git_repos\msal\1-no-auth\MyWebApp01\obj\Debug\net9.0\ref\MyWebApp01.dll
+E:\Users\mauromi\source\git_repos\msal\1-no-auth\MyWebApp01\obj\Debug\net9.0\MyWebApp01.sourcelink.json

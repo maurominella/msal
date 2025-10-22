@@ -1,17 +1,32 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.Identity.Web;
 
+// Configuration: reads from appsettings.json, environment variables, command-line args
+// Logging: set the predefined logging (Console, Debug, etc.)
+// Dependency Injection (DI): create the service container (builder.Services), even if you don't use it
+// Even if you don't explicitly use these features, the WebApplication.CreateBuilder(args) call sets them up for you
 var builder = WebApplication.CreateBuilder(args);
 
+// Add services to the container.
 builder.Services
-    .AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
-    .AddMicrosoftIdentityWebApp(builder.Configuration.GetSection("AzureAd"));
+    // register authorization services to protect endpoints with .RequireAuthorization
+    .AddAuthorization()
+    // register Authentication middleware like OpenID Connect, but does not configure it
+    .AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme) 
+    // register Microsoft.Identity.Web to configure OpenID Connect as defined in appsettings.json
+    .AddMicrosoftIdentityWebApp(builder.Configuration.GetSection("EntraID"));
 
-builder.Services.AddAuthorization();
+builder.Services.Configure<OpenIdConnectOptions>(OpenIdConnectDefaults.AuthenticationScheme, options =>
+{
+    options.SaveTokens = true; // ✅ salva ID token e access token in AuthenticationProperties
+});
 
+// Build the app.
 var app = builder.Build();
 
-app.MapGet("/", () => "Hello World!");
+// Configure the HTTP request pipeline.
+app.MapGet("/", () => Results.Ok("Hello World!"));
 
 app.MapGet("/me", async (HttpContext context) =>
 {
@@ -24,5 +39,12 @@ app.MapGet("/me", async (HttpContext context) =>
     return Results.Unauthorized();
 }).RequireAuthorization();
 
+app.MapGet("/tokenid", async (HttpContext context) =>
+{
+    var idToken = await context.GetTokenAsync("id_token");
+    return Results.Ok(new { IdToken = idToken });
+}).RequireAuthorization();
 
+
+// Run the app.
 app.Run();

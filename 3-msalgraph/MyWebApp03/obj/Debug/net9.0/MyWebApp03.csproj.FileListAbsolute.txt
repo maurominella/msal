@@ -70,3 +70,5 @@ E:\Users\mauromi\source\git_repos\msal\3-msalgraph\MyWebApp03\bin\Debug\net9.0\M
 E:\Users\mauromi\source\git_repos\msal\3-msalgraph\MyWebApp03\bin\Debug\net9.0\Std.UriTemplate.dll
 E:\Users\mauromi\source\git_repos\msal\3-msalgraph\MyWebApp03\bin\Debug\net9.0\DotNetEnv.dll
 E:\Users\mauromi\source\git_repos\msal\3-msalgraph\MyWebApp03\bin\Debug\net9.0\Sprache.dll
+E:\Users\mauromi\source\git_repos\msal\3-msalgraph\MyWebApp03\obj\Debug\net9.0\MyWebApp03.sourcelink.json
+E:\Users\mauromi\source\git_repos\msal\3-msalgraph\MyWebApp03\obj\Debug\net9.0\swae.build.ex.cache

@@ -1,5 +1,6 @@
-// $env:AzureAd__ClientCredentials__0__ClientSecret=""
-// export AzureAd__ClientCredentials__0__ClientSecret="****"
+// setx AzureAd__ClientCredentials__0__ClientSecret "value" -- in this case you need to restart the terminal to see it
+// $env:AzureAd__ClientCredentials__0__ClientSecret="value"
+// export AzureAd__ClientCredentials__0__ClientSecret="****" -- bash linux/windows
 
 using DotNetEnv;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
@@ -17,6 +18,7 @@ catch { /* log if you want, but ignore in prod */ }
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
+    .AddAuthorization()
     .AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
     .AddMicrosoftIdentityWebApp(builder.Configuration.GetSection("AzureAd"))
     .EnableTokenAcquisitionToCallDownstreamApi() // enables token acquisition and caching
@@ -26,17 +28,27 @@ builder.Services
 // Authorization: policy based on the scope of our API
 builder.Services.Configure<OpenIdConnectOptions>(OpenIdConnectDefaults.AuthenticationScheme, options =>
 {
+    options.SaveTokens = true; 
+    options.GetClaimsFromUserInfoEndpoint = true;
     options.Scope.Add("User.Read"); 
 });
 
-builder.Services.AddAuthorization();
-
 var app = builder.Build();
+
+Console.WriteLine("MAKE SURE THIS IS THE RIGHT SECRET: " + builder.Configuration["AzureAd:ClientCredentials:0:ClientSecret"]);
 
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapGet("/", () => "Hello World!");
+app.MapGet("/debug", (IConfiguration config) =>
+{
+    return Results.Ok(new {
+        FromEnv = Environment.GetEnvironmentVariable("AzureAd__ClientCredentials__0__ClientSecret"),
+        FromConfig = config["AzureAd:ClientCredentials:0:ClientSecret"]
+    });
+});
+
 
 app.MapGet("/me", async (HttpContext context) =>
 {
@@ -50,7 +62,7 @@ app.MapGet("/me", async (HttpContext context) =>
 }).RequireAuthorization();
 
 // protected endpoint that reads the jobTitle from the user's Graph profile
-app.MapGet("/me/jobtitle", async (GraphServiceClient graph) =>
+app.MapGet("/jobtitle", async (GraphServiceClient graph) =>
 {
     var me = await graph.Me.GetAsync(req =>
     {
@@ -59,8 +71,7 @@ app.MapGet("/me/jobtitle", async (GraphServiceClient graph) =>
     return me is null
         ? Results.NotFound()
         : Results.Ok(new { me.DisplayName, me.JobTitle });
-})
-.RequireAuthorization();
+}).RequireAuthorization();
 
 
 app.Run();

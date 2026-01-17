@@ -58,3 +58,4 @@ E:\Users\mauromi\source\git_repos\msal\2-msidentityweb\MyWebApp02\obj\Debug\net9
 E:\Users\mauromi\source\git_repos\msal\2-msidentityweb\MyWebApp02\obj\Debug\net9.0\MyWebApp02.genruntimeconfig.cache
 E:\Users\mauromi\source\git_repos\msal\2-msidentityweb\MyWebApp02\obj\Debug\net9.0\ref\MyWebApp02.dll
 E:\Users\mauromi\source\git_repos\msal\2-msidentityweb\MyWebApp02\obj\Debug\net9.0\MyWebApp02.sourcelink.json
+E:\Users\mauromi\source\git_repos\msal\2-msidentityweb\MyWebApp02\obj\Debug\net9.0\swae.build.ex.cache

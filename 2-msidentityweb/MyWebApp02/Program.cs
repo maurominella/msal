@@ -12,14 +12,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services
     // register authorization services to protect endpoints with .RequireAuthorization
     .AddAuthorization()
-    // register Authentication middleware like OpenID Connect, but does not configure it
+    // register Authentication middleware like OpenID Connect, that will be configured to use Entra ID thorugh Microsoft.Identity.Web
     .AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme) 
-    // register Microsoft.Identity.Web to configure OpenID Connect as defined in appsettings.json
+    // register Microsoft.Identity.Web to configure OpenID Connect as defined in appsettings.json, which gives an identity to our app
     .AddMicrosoftIdentityWebApp(builder.Configuration.GetSection("EntraID"));
 
 builder.Services.Configure<OpenIdConnectOptions>(OpenIdConnectDefaults.AuthenticationScheme, options =>
 {
-    options.SaveTokens = true; // ✅ salva ID token e access token in AuthenticationProperties
+    options.SaveTokens = true; // ✅ save ID token and access token in AuthenticationProperties
 });
 
 // Build the app.

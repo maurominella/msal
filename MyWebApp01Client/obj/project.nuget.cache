@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "b/7UuQMpMxc=",
+  "success": true,
+  "projectFilePath": "E:\\Users\\mauromi\\source\\git_repos\\msal_v2\\MyWebApp01Client\\MyWebApp01Client.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\mauromi\\.nuget\\packages\\microsoft.identity.client\\4.81.0\\microsoft.identity.client.4.81.0.nupkg.sha512",
+    "C:\\Users\\mauromi\\.nuget\\packages\\microsoft.identitymodel.abstractions\\8.14.0\\microsoft.identitymodel.abstractions.8.14.0.nupkg.sha512"
+  ],
+  "logs": []
+}
